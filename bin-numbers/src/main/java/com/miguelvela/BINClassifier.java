@@ -23,14 +23,8 @@ public class BINClassifier {
 
         return Arrays.stream(this.binRanges)
                 .map(binRange -> {
-                    String[] binRangeStartSegments = binRange[0].split(" ");
-                    String binRangeStartSanitized = String.join("", binRangeStartSegments);
-                    long binStart = Long.parseLong(binRangeStartSanitized);
-
-                    String[] binRangeEndSegments = binRange[1].split(" ");
-                    String binRangeEndSanitized = String.join("", binRangeEndSegments);
-                    long binEnd = Long.parseLong(binRangeEndSanitized);
-
+                    long binStart = getBin(binRange[0]);
+                    long binEnd = getBin(binRange[1]);
                     String schema = binRange[2];
 
                     if(bin >= binStart && bin <= binEnd) {
