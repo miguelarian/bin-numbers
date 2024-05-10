@@ -12,7 +12,6 @@ class BINClassifierTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    @ValueSource(strings = {"  ", "\t", "\n"})
     void classify__nullCard_returnsNull(String card) {
         String[][] binRanges = new String[][]{};
         BINClassifier classifier = new BINClassifier(binRanges);
@@ -20,6 +19,17 @@ class BINClassifierTest {
         String result = classifier.classify(card);
 
         assertThat("Empty or null card did not return null", result, is(nullValue()));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"  ", "\t", "\n", "not a card", "1234567", "1 2 3 4 5 6 7"})
+    void classify__randomValuesCard_returnsNull(String card) {
+        String[][] binRanges = new String[][]{};
+        BINClassifier classifier = new BINClassifier(binRanges);
+
+        String result = classifier.classify(card);
+
+        assertThat("Random values for card did not return null", result, is(nullValue()));
     }
 
     @ParameterizedTest
