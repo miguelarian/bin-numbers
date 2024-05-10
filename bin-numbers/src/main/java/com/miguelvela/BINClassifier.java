@@ -14,14 +14,7 @@ public class BINClassifier {
 
     public String classify(String card) {
 
-        if(card == null || card == "") {
-            return null;
-        }
-        String regex = "^\\d{4} \\d{4} \\d{4} \\d{4}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(card);
-
-        if (!matcher.matches()) {
+        if (!validateCard(card)){
             return null;
         }
 
@@ -49,5 +42,20 @@ public class BINClassifier {
                 })
                 .findFirst()
                 .orElse(null);
+    }
+
+    private static boolean validateCard(String card) {
+        if(card == null || card == "") {
+            return false;
+        }
+        String cardRegex = "^\\d{4} \\d{4} \\d{4} \\d{4}$";
+        Pattern pattern = Pattern.compile(cardRegex);
+        Matcher matcher = pattern.matcher(card);
+
+        if (!matcher.matches()) {
+            return false;
+        }
+
+        return true;
     }
 }
