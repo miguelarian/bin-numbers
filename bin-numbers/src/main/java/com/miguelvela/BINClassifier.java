@@ -1,6 +1,7 @@
 package com.miguelvela;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,7 +33,8 @@ public class BINClassifier {
                     }
                     return null;
                 })
-                .findFirst()
+                .filter(Objects::nonNull)
+                .findAny()
                 .orElse(null);
     }
 

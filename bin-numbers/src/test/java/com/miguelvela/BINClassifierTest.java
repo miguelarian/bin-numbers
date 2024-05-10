@@ -1,5 +1,6 @@
 package com.miguelvela;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -33,11 +34,25 @@ class BINClassifierTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"4111 1111 1111 1111", "4111 2222 2222 2222"})
-    void classify_withValidRandomVisaCard_returnsVisa(String visaCard) {
+    void classify_withValidVisaCard_returnsVisa(String visaCard) {
 
         String[] visaBINs = new String[] {"4111 1111 11", "4444 4444 44", "Visa"};
         String[][] binRanges = new String[][] { visaBINs };
         String expected = "Visa";
+        BINClassifier classifier = new BINClassifier(binRanges);
+
+        String result = classifier.classify(visaCard);
+
+        assertThat("Visa card classification failed", result, is(equalTo(expected)));
+    }
+
+    @Test
+    void classify_withVisaCardAndNoVisaRange_returnsNull() {
+
+        String[] masterCardBINs = new String[] {"5555 5555 55", "5555 9999 99", "Master Card"};
+        String[][] binRanges = new String[][] { masterCardBINs };
+        String visaCard = "4111 1111 1111 1111";
+        String expected = null;
         BINClassifier classifier = new BINClassifier(binRanges);
 
         String result = classifier.classify(visaCard);
