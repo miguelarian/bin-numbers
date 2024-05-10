@@ -21,7 +21,6 @@ public class BINClassifier {
 
         long bin = getBin(card);
 
-
         return Arrays.stream(this.binRanges)
                 .map(binRange -> {
                     long binStart = getBin(binRange[0]);
