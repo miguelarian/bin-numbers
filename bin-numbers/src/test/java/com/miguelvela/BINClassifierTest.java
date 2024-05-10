@@ -59,4 +59,19 @@ class BINClassifierTest {
 
         assertThat("Visa card classification failed", result, is(equalTo(expected)));
     }
+
+    @Test
+    void classify_withCachedCard_resultIsRetrievedFromCache() {
+
+        String[] masterCardBINs = new String[] {"5555 5555 55", "5555 9999 99", "Master Card"};
+        String[][] binRanges = new String[][] { masterCardBINs };
+        String masterCard = "5555 5555 5555 5555";
+        BINClassifier classifier = new BINClassifier(binRanges);
+        String expected = "Master Card";
+
+        String result1 = classifier.classify(masterCard);
+        assertThat("Master Card classification failed", result1, is(equalTo(expected)));
+        String result2 = classifier.classify(masterCard);
+        assertThat("Master Card classification cached failed", result2, is(equalTo(expected)));
+    }
 }

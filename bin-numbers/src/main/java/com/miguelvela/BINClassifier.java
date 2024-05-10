@@ -1,6 +1,8 @@
 package com.miguelvela;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,6 +10,7 @@ import java.util.regex.Pattern;
 public class BINClassifier {
 
     private final String[][] binRanges;
+    private final Map<Long, String> cache = new HashMap<>();
 
     public BINClassifier(String[][] binRanges) {
         this.binRanges = binRanges;
@@ -21,6 +24,10 @@ public class BINClassifier {
 
         long bin = getBin(card);
 
+        if(this.cache.containsKey(bin)){
+            return this.cache.get(bin);
+        }
+
         return Arrays.stream(this.binRanges)
                 .map(binRange -> {
                     long binStart = getBin(binRange[0]);
@@ -28,6 +35,7 @@ public class BINClassifier {
                     String schema = binRange[2];
 
                     if(bin >= binStart && bin <= binEnd) {
+                        this.cache.put(bin, schema);
                         return schema;
                     }
                     return null;
