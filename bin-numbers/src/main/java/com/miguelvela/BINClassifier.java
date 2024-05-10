@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class BINClassifier {
 
-    private String[][] binRanges;
+    private final String[][] binRanges;
 
     public BINClassifier(String[][] binRanges) {
         this.binRanges = binRanges;
@@ -40,22 +40,17 @@ public class BINClassifier {
     private static long getBin(String card) {
         String[] cardSegments = card.split(" ");
         String cardSanitized = String.join("", cardSegments);
-        long bin = Long.parseLong(cardSanitized.substring(0, 10));
-        return bin;
+        return Long.parseLong(cardSanitized.substring(0, 10));
     }
 
     private static boolean validateCard(String card) {
-        if(card == null || card == "") {
+        if(card == null || card.isEmpty()) {
             return false;
         }
         String cardRegex = "^\\d{4} \\d{4} \\d{4} \\d{4}$";
         Pattern pattern = Pattern.compile(cardRegex);
         Matcher matcher = pattern.matcher(card);
 
-        if (!matcher.matches()) {
-            return false;
-        }
-
-        return true;
+        return matcher.matches();
     }
 }
