@@ -18,9 +18,7 @@ public class BINClassifier {
             return null;
         }
 
-        String[] cardSegments = card.split(" ");
-        String cardSanitized = String.join("", cardSegments);
-        long bin = Long.parseLong(cardSanitized.substring(0, 10));
+        long bin = getBin(card);
 
 
         return Arrays.stream(this.binRanges)
@@ -42,6 +40,13 @@ public class BINClassifier {
                 })
                 .findFirst()
                 .orElse(null);
+    }
+
+    private static long getBin(String card) {
+        String[] cardSegments = card.split(" ");
+        String cardSanitized = String.join("", cardSegments);
+        long bin = Long.parseLong(cardSanitized.substring(0, 10));
+        return bin;
     }
 
     private static boolean validateCard(String card) {
