@@ -35,7 +35,7 @@ class BINClassifierTest {
     @ValueSource(strings = {"4111 1111 1111 1111", "4111 2222 2222 2222"})
     void classify_withValidRandomVisaCard_returnsVisa(String visaCard) {
 
-        String[] visaBINs = new String[] {"4444 4444 11", "4444 4444 44", "Visa"};
+        String[] visaBINs = new String[] {"4111 1111 11", "4444 4444 44", "Visa"};
         String[][] binRanges = new String[][] { visaBINs };
         String expected = "Visa";
         BINClassifier classifier = new BINClassifier(binRanges);
